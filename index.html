@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOW Studio — Creative Design Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:    #FAF8F4;
+    --ivory:    #F4F0E8;
+    --sand:     #E8E0D0;
+    --warm-gray:#9E9690;
+    --charcoal: #2A2825;
+    --gold:     #C9A96E;
+    --gold-lt:  #EDD9B5;
+    --white:    #FFFFFF;
+    --accent:   #8B7355;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:  'Inter', system-ui, sans-serif;
+    --nav-h: 72px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--cream);
+    color: var(--charcoal);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+  }
+  .logo {
+    font-family: var(--font-serif);
+    font-size: 22px; font-weight: 500; letter-spacing: 0.12em;
+    color: var(--charcoal); text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--warm-gray); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--charcoal); }
+  .nav-cta {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    background: var(--charcoal); color: var(--cream);
+    padding: 10px 24px; border: none; cursor: pointer;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* hamburger */
+  .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .burger span { display: block; width: 24px; height: 1.5px; background: var(--charcoal); transition: 0.3s; }
+
+  /* mobile menu */
+  .mobile-menu {
+    display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
+    background: var(--cream); z-index: 99; flex-direction: column;
+    align-items: center; justify-content: center; gap: 36px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: var(--font-serif); font-size: 36px; font-weight: 300;
+    color: var(--charcoal); text-decoration: none; letter-spacing: 0.05em;
+  }
+
+  /* ── SECTIONS ── */
+  section { display: none; }
+  section.active { display: block; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; padding-top: var(--nav-h);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding-bottom: 80px; padding-left: 5%; padding-right: 5%;
+    background: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-family: var(--font-serif); font-size: clamp(100px, 22vw, 280px);
+    font-weight: 300; color: var(--sand); letter-spacing: -0.02em;
+    pointer-events: none; white-space: nowrap; line-height: 1;
+    opacity: 0.5;
+  }
+  .hero-tag {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+  }
+  .hero-h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(42px, 7vw, 96px);
+    font-weight: 300; line-height: 1.08; letter-spacing: -0.01em;
+    max-width: 800px; margin-bottom: 36px;
+  }
+  .hero-h1 em { font-style: italic; color: var(--accent); }
+  .hero-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    flex-wrap: wrap; gap: 32px;
+  }
+  .hero-desc {
+    font-size: 14px; color: var(--warm-gray); max-width: 340px; line-height: 1.8;
+  }
+  .hero-scroll { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); display: flex; align-items: center; gap: 12px; }
+  .hero-scroll::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+  .hero-image-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    padding: 0 5%; margin-top: 80px;
+  }
+  .hero-img-card {
+    aspect-ratio: 4/5; overflow: hidden; position: relative;
+    background: var(--ivory);
+  }
+  .hero-img-card:first-child { aspect-ratio: 3/4; transform: translateY(-40px); }
+  .hero-img-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-img-card .img-label {
+    position: absolute; bottom: 16px; left: 16px;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--white); background: rgba(42,40,37,0.6);
+    padding: 6px 12px;
+  }
+  .btn {
+    display: inline-block; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 14px 36px;
+    background: var(--charcoal); color: var(--cream);
+    text-decoration: none; border: 1px solid var(--charcoal);
+    transition: all 0.25s; cursor: pointer;
+  }
+  .btn:hover { background: transparent; color: var(--charcoal); }
+  .btn-outline {
+    background: transparent; color: var(--charcoal);
+  }
+  .btn-outline:hover { background: var(--charcoal); color: var(--cream); }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    overflow: hidden; border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand);
+    padding: 20px 0; background: var(--ivory); margin: 80px 0;
+  }
+  .marquee { display: flex; gap: 0; white-space: nowrap; animation: marquee 22s linear infinite; }
+  .marquee span {
+    font-family: var(--font-serif); font-size: 20px; font-weight: 300;
+    color: var(--warm-gray); padding: 0 48px; letter-spacing: 0.04em;
+  }
+  .marquee span em { font-style: italic; color: var(--gold); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    padding: 100px 5%; align-items: center;
+  }
+  .about-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: var(--sand); }
+  .about-img-wrap { position: relative; }
+  .about-badge {
+    position: absolute; bottom: -24px; right: -24px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: var(--charcoal); color: var(--cream);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: var(--font-serif);
+  }
+  .about-badge strong { font-size: 28px; font-weight: 400; }
+  .about-badge span { font-size: 11px; letter-spacing: 0.1em; }
+  .section-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 4vw, 56px); font-weight: 300; line-height: 1.15;
+    margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-body { font-size: 14px; color: var(--warm-gray); line-height: 1.9; margin-bottom: 20px; }
+  .stats-row { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+  .stat { border-left: 2px solid var(--gold); padding-left: 20px; }
+  .stat-num { font-family: var(--font-serif); font-size: 40px; font-weight: 300; color: var(--charcoal); }
+  .stat-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); }
+
+  /* ── SERVICES ── */
+  .services-hero {
+    padding: 120px 5% 60px;
+    background: var(--charcoal); color: var(--cream);
+    text-align: center;
+  }
+  .services-hero .section-eyebrow { color: var(--gold); }
+  .services-hero .section-title { color: var(--cream); }
+  .services-hero .section-title em { color: var(--gold-lt); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--sand); margin-bottom: 80px; }
+  .service-card {
+    background: var(--white); padding: 48px 40px;
+    transition: background 0.25s;
+  }
+  .service-card:hover { background: var(--ivory); }
+  .service-num { font-family: var(--font-serif); font-size: 48px; font-weight: 300; color: var(--sand); line-height: 1; margin-bottom: 20px; }
+  .service-title { font-family: var(--font-serif); font-size: 26px; font-weight: 400; margin-bottom: 16px; }
+  .service-body { font-size: 13px; color: var(--warm-gray); line-height: 1.8; margin-bottom: 24px; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border: 1px solid var(--sand); color: var(--warm-gray); }
+
+  /* ── PORTFOLIO ── */
+  .portfolio-header { padding: 100px 5% 60px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
+  .filter-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .filter-btn {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 8px 20px; border: 1px solid var(--sand);
+    background: transparent; cursor: pointer; color: var(--warm-gray);
+    transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--charcoal); color: var(--cream); border-color: var(--charcoal); }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; padding: 0 5% 100px; }
+  .work-card { overflow: hidden; position: relative; background: var(--sand); cursor: pointer; }
+  .work-card:nth-child(1) { grid-column: span 8; aspect-ratio: 16/9; }
+  .work-card:nth-child(2) { grid-column: span 4; aspect-ratio: 3/4; }
+  .work-card:nth-child(3) { grid-column: span 4; aspect-ratio: 3/4; }
+  .work-card:nth-child(4) { grid-column: span 8; aspect-ratio: 16/9; }
+  .work-card:nth-child(5) { grid-column: span 6; aspect-ratio: 4/3; }
+  .work-card:nth-child(6) { grid-column: span 6; aspect-ratio: 4/3; }
+  .work-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; display: block; }
+  .work-card:hover img { transform: scale(1.04); }
+  .work-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(42,40,37,0.8));
+    padding: 48px 24px 24px; opacity: 0; transition: opacity 0.3s;
+  }
+  .work-card:hover .work-info { opacity: 1; }
+  .work-title { font-family: var(--font-serif); font-size: 22px; color: var(--white); font-weight: 400; }
+  .work-cat { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-lt); margin-top: 4px; }
+
+  /* ── PROCESS ── */
+  .process-section { padding: 100px 5%; background: var(--ivory); }
+  .process-steps { margin-top: 64px; }
+  .process-step {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    align-items: start; gap: 32px; padding: 40px 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .process-step:last-child { border-bottom: none; }
+  .step-num { font-family: var(--font-serif); font-size: 48px; font-weight: 300; color: var(--sand); line-height: 1; }
+  .step-title { font-family: var(--font-serif); font-size: 28px; font-weight: 400; margin-bottom: 12px; }
+  .step-body { font-size: 13px; color: var(--warm-gray); line-height: 1.8; }
+  .step-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); align-self: center; white-space: nowrap; }
+
+  /* ── TEAM ── */
+  .team-section { padding: 100px 5%; }
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; margin-top: 64px; }
+  .team-card { }
+  .team-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: var(--sand); display: block; margin-bottom: 20px; }
+  .team-name { font-family: var(--font-serif); font-size: 24px; font-weight: 400; }
+  .team-role { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-top: 4px; }
+  .team-bio { font-size: 13px; color: var(--warm-gray); margin-top: 12px; line-height: 1.7; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { padding: 100px 5%; background: var(--charcoal); }
+  .testimonials .section-eyebrow { color: var(--gold); }
+  .testimonials .section-title { color: var(--cream); }
+  .testimonials .section-title em { color: var(--gold-lt); }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; margin-top: 60px; background: rgba(255,255,255,0.06); }
+  .testi-card { background: var(--charcoal); padding: 48px 40px; border: 1px solid rgba(255,255,255,0.07); }
+  .testi-quote { font-family: var(--font-serif); font-size: 20px; font-weight: 300; font-style: italic; color: var(--cream); line-height: 1.6; margin-bottom: 32px; }
+  .testi-author { display: flex; align-items: center; gap: 16px; }
+  .testi-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: var(--warm-gray); }
+  .testi-name { font-size: 13px; font-weight: 500; color: var(--cream); }
+  .testi-co { font-size: 11px; color: var(--warm-gray); letter-spacing: 0.08em; }
+  .stars { color: var(--gold); font-size: 14px; margin-bottom: 20px; letter-spacing: 3px; }
+
+  /* ── BLOG ── */
+  .blog-section { padding: 100px 5%; }
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 64px; }
+  .blog-card { cursor: pointer; }
+  .blog-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--sand); display: block; transition: opacity 0.3s; }
+  .blog-card:hover .blog-img { opacity: 0.85; }
+  .blog-meta { display: flex; align-items: center; gap: 12px; margin: 20px 0 12px; }
+  .blog-cat { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+  .blog-date { font-size: 11px; color: var(--warm-gray); }
+  .blog-title { font-family: var(--font-serif); font-size: 24px; font-weight: 400; line-height: 1.3; margin-bottom: 12px; }
+  .blog-excerpt { font-size: 13px; color: var(--warm-gray); line-height: 1.7; }
+  .blog-read { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--charcoal); display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; text-decoration: none; }
+  .blog-read::after { content: '→'; }
+
+  /* ── CONTACT ── */
+  .contact-section { padding: 100px 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray); }
+  input, textarea, select {
+    font-family: var(--font-sans); font-size: 14px;
+    padding: 14px 16px; border: 1px solid var(--sand);
+    background: var(--white); color: var(--charcoal);
+    outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+  textarea { resize: vertical; min-height: 140px; }
+  .contact-info { padding-top: 12px; }
+  .contact-detail { margin-bottom: 40px; }
+  .contact-detail h4 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .contact-detail p { font-size: 15px; color: var(--charcoal); }
+  .contact-detail a { color: var(--charcoal); text-decoration: none; }
+  .contact-detail a:hover { color: var(--gold); }
+  .social-links { display: flex; gap: 20px; margin-top: 40px; }
+  .social-links a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.2s; }
+  .social-links a:hover { color: var(--charcoal); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal); color: var(--cream);
+    padding: 60px 5% 32px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand { font-family: var(--font-serif); font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.8; max-width: 260px; margin-top: 16px; }
+  .footer-col h5 { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap-16; }
+  .footer-bottom p { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.05em; }
+
+  /* ── CTA STRIP ── */
+  .cta-strip { background: var(--ivory); border-top: 1px solid var(--sand); border-bottom: 1px solid var(--sand); padding: 80px 5%; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .cta-strip h2 { font-family: var(--font-serif); font-size: clamp(28px, 4vw, 52px); font-weight: 300; }
+  .cta-strip h2 em { font-style: italic; color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .burger { display: flex; }
+    .about-grid, .contact-section { grid-template-columns: 1fr; gap: 48px; }
+    .about-img-wrap { order: -1; }
+    .about-badge { right: 16px; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .work-card { grid-column: span 1 !important; aspect-ratio: 4/3 !important; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .process-step { grid-template-columns: 60px 1fr; }
+    .step-tag { display: none; }
+  }
+  @media (max-width: 600px) {
+    .hero-h1 { font-size: 38px; }
+    .hero-image-grid { grid-template-columns: 1fr; }
+    .hero-img-card:first-child { transform: none; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .cta-strip { text-align: center; justify-content: center; }
+    .services-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .stats-row { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <a href="#" class="logo" onclick="showSection('home')">HOW Studio</a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showSection('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showSection('services')" id="nav-services">Services</a></li>
+    <li><a href="#" onclick="showSection('portfolio')" id="nav-portfolio">Work</a></li>
+    <li><a href="#" onclick="showSection('blog')" id="nav-blog">Journal</a></li>
+    <li><a href="#" onclick="showSection('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="showSection('contact')">Start a Project</a>
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="showSection('home'); closeMobile()">Home</a>
+  <a href="#" onclick="showSection('about'); closeMobile()">About</a>
+  <a href="#" onclick="showSection('services'); closeMobile()">Services</a>
+  <a href="#" onclick="showSection('portfolio'); closeMobile()">Work</a>
+  <a href="#" onclick="showSection('blog'); closeMobile()">Journal</a>
+  <a href="#" onclick="showSection('contact'); closeMobile()">Contact</a>
+</div>
+
+<!-- ════════════════════════════════
+     HOME PAGE
+════════════════════════════════ -->
+<section id="home" class="active">
+  <div class="hero">
+   <!-- <div class="hero-bg-text">HOW</div>-->
+    <p class="hero-tag">Creative Studio — Est. 2015</p>
+    <h1 class="hero-h1">We craft <em>beautiful</em><br>brand experiences<br>that endure.</h1>
+    <div class="hero-row">
+      <p class="hero-desc">A luxury design studio specialising in brand identity, digital experiences, and spatial design for discerning clients worldwide.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <a href="#" class="btn" onclick="showSection('portfolio')">View Our Work</a>
+        <a href="#" class="btn btn-outline" onclick="showSection('contact')">Let's Talk</a>
+      </div>
+      <span class="hero-scroll">Scroll to explore</span>
+    </div>
+  </div>
+
+  <div class="hero-image-grid">
+    <div class="hero-img-card">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Brand identity project">
+      <span class="img-label">Brand Identity</span>
+    </div>
+    <div class="hero-img-card">
+      <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&q=80" alt="Digital design project">
+      <span class="img-label">Digital Experience</span>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span>Brand Identity</span><span>·</span><span>Digital <em>Experience</em></span><span>·</span>
+      <span>Spatial Design</span><span>·</span><span>Art Direction</span><span>·</span>
+      <span>Motion <em>Graphics</em></span><span>·</span><span>Photography</span><span>·</span>
+      <span>Brand Identity</span><span>·</span><span>Digital <em>Experience</em></span><span>·</span>
+      <span>Spatial Design</span><span>·</span><span>Art Direction</span><span>·</span>
+      <span>Motion <em>Graphics</em></span><span>·</span><span>Photography</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- Mini about on home -->
+  <div class="about-grid">
+    <div class="about-img-wrap">
+      <img class="about-img" src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=700&q=80" alt="Our studio space">
+      <div class="about-badge">
+        <strong>10+</strong>
+        <span>Years</span>
+      </div>
+    </div>
+    <div>
+      <p class="section-eyebrow">Who We Are</p>
+      <h2 class="section-title">A studio built on <em>craft</em> and conviction.</h2>
+      <p class="section-body">HOW Studio is a multi-disciplinary creative studio headquartered in London, with projects spanning six continents. We partner with luxury brands, cultural institutions, and ambitious startups to create work that matters.</p>
+      <p class="section-body">Our approach is simple: we listen deeply, think expansively, and design with intention. Every project is an opportunity to create something that endures beyond trend.</p>
+      <a href="#" class="btn btn-outline" onclick="showSection('about')">Our Story</a>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num">240+</div><div class="stat-label">Projects</div></div>
+        <div class="stat"><div class="stat-num">38</div><div class="stat-label">Awards</div></div>
+        <div class="stat"><div class="stat-num">18</div><div class="stat-label">Countries</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Strip -->
+  <div class="cta-strip">
+    <h2>Ready to create something <em>extraordinary</em>?</h2>
+    <a href="#" class="btn" onclick="showSection('contact')">Begin Your Project</a>
+  </div>
+
+  <!-- Footer on Home -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="font-size:28px;color:var(--cream)">HOW Studio</div>
+        <p class="footer-brand">Crafting beautiful brand experiences for discerning clients worldwide since 2015.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Studio</h5>
+        <a href="#" onclick="showSection('about')">About</a>
+        <a href="#" onclick="showSection('services')">Services</a>
+        <a href="#" onclick="showSection('portfolio')">Work</a>
+        <a href="#" onclick="showSection('blog')">Journal</a>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <a href="#">Brand Identity</a>
+        <a href="#">Digital Design</a>
+        <a href="#">Spatial Design</a>
+        <a href="#">Art Direction</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <a href="#">hello@howstudio.com</a>
+        <a href="#">+44 20 7946 0988</a>
+        <a href="#">London, UK</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 HOW Studio. All rights reserved.</p>
+      <p>Privacy Policy · Terms of Use</p>
+    </div>
+  </footer>
+</section>
+
+<!-- ════════════════════════════════
+     ABOUT PAGE
+════════════════════════════════ -->
+<section id="about">
+  <div style="padding:160px 5% 80px;background:var(--ivory);">
+    <p class="section-eyebrow">About Us</p>
+    <h1 class="section-title" style="max-width:700px;font-size:clamp(40px,6vw,80px)">We believe design<br>can <em>change</em> the world.</h1>
+  </div>
+
+  <div class="about-grid" style="padding:80px 5%">
+    <div class="about-img-wrap">
+      <img class="about-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80" alt="Studio interior">
+      <div class="about-badge"><strong>10+</strong><span>Years</span></div>
+    </div>
+    <div>
+      <p class="section-eyebrow">Our Story</p>
+      <h2 class="section-title">From a <em>small loft</em> to a global studio.</h2>
+      <p class="section-body">HOW Studio was founded in 2015 by creative directors Maya Chen and James Harlow in a small East London loft. What started as a two-person operation quickly grew into one of the most respected design studios in Europe.</p>
+      <p class="section-body">We've since expanded to a team of 24 creatives, strategists, and technologists — united by a shared obsession with exceptional craft and meaningful communication.</p>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <div style="padding:80px 5%;background:var(--charcoal);">
+    <p class="section-eyebrow" style="color:var(--gold);">Our Values</p>
+    <h2 class="section-title" style="color:var(--cream);margin-bottom:60px;">The principles that <em>guide</em> everything we do.</h2>
+    <div class="services-grid" style="background:rgba(255,255,255,0.05)">
+      <div class="service-card" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07)">
+        <div class="service-num" style="color:rgba(255,255,255,0.1)">01</div>
+        <h3 class="service-title" style="color:var(--cream)">Craft Over Speed</h3>
+        <p class="service-body">We believe the best work takes time. We never compromise quality for a deadline, and we're proud to work with clients who share that philosophy.</p>
+      </div>
+      <div class="service-card" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07)">
+        <div class="service-num" style="color:rgba(255,255,255,0.1)">02</div>
+        <h3 class="service-title" style="color:var(--cream)">Purpose with Beauty</h3>
+        <p class="service-body">Aesthetic beauty and strategic purpose are not opposites — they're partners. Every design choice must earn its place by serving both the eye and the goal.</p>
+      </div>
+      <div class="service-card" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07)">
+        <div class="service-num" style="color:rgba(255,255,255,0.1)">03</div>
+        <h3 class="service-title" style="color:var(--cream)">Enduring Over Trendy</h3>
+        <p class="service-body">Trends fade. We design for longevity — creating visual systems and brand identities that remain relevant and resonant years into the future.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="team-section">
+    <p class="section-eyebrow">Our People</p>
+    <h2 class="section-title">The <em>creative minds</em> behind the work.</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <img class="team-img" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Maya Chen">
+        <h3 class="team-name">Maya Chen</h3>
+        <p class="team-role">Co-Founder, Creative Director</p>
+        <p class="team-bio">Former design lead at Pentagram, Maya brings 15 years of brand strategy and visual identity expertise to every project.</p>
+      </div>
+      <div class="team-card">
+        <img class="team-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="James Harlow">
+        <h3 class="team-name">James Harlow</h3>
+        <p class="team-role">Co-Founder, Strategy Director</p>
+        <p class="team-bio">With a background in semiotics and cultural strategy, James ensures every creative decision is rooted in meaning and purpose.</p>
+      </div>
+      <div class="team-card">
+        <img class="team-img" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80" alt="Priya Sharma">
+        <h3 class="team-name">Priya Sharma</h3>
+        <p class="team-role">Head of Digital</p>
+        <p class="team-bio">Priya leads our digital practice, crafting interactive experiences that bridge the physical and digital worlds with elegance.</p>
+      </div>
+      <div class="team-card">
+        <img class="team-img" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Luca Moretti">
+        <h3 class="team-name">Luca Moretti</h3>
+        <p class="team-role">Senior Art Director</p>
+        <p class="team-bio">Milan-trained and London-based, Luca brings a European sensibility to editorial design and luxury brand projects.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h2>Want to work with our <em>team</em>?</h2>
+    <a href="#" class="btn" onclick="showSection('contact')">Get in Touch</a>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div><div class="logo" style="font-size:28px;color:var(--cream)">HOW Studio</div><p class="footer-brand">Crafting beautiful brand experiences for discerning clients worldwide since 2015.</p></div>
+      <div class="footer-col"><h5>Studio</h5><a href="#" onclick="showSection('about')">About</a><a href="#" onclick="showSection('services')">Services</a><a href="#" onclick="showSection('portfolio')">Work</a></div>
+      <div class="footer-col"><h5>Services</h5><a href="#">Brand Identity</a><a href="#">Digital Design</a><a href="#">Spatial Design</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="#">hello@howstudio.com</a><a href="#">London, UK</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 HOW Studio. All rights reserved.</p><p>Privacy · Terms</p></div>
+  </footer>
+</section>
+
+<!-- ════════════════════════════════
+     SERVICES PAGE
+════════════════════════════════ -->
+<section id="services">
+  <div class="services-hero">
+    <p class="section-eyebrow">What We Do</p>
+    <h1 class="section-title" style="max-width:600px;margin:0 auto 24px;font-size:clamp(40px,6vw,80px)">Services built for <em>impact</em>.</h1>
+    <p style="font-size:15px;color:rgba(255,255,255,0.55);max-width:480px;margin:0 auto;">From brand foundations to immersive digital worlds, we offer end-to-end creative services for brands that demand excellence.</p>
+  </div>
+
+  <div class="services-grid" style="margin-top:0">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3 class="service-title">Brand Identity</h3>
+      <p class="service-body">We create distinctive brand identities that communicate your values, differentiate you in market, and build lasting emotional connection with your audience.</p>
+      <div class="service-tags">
+        <span class="tag">Logo Design</span><span class="tag">Visual Systems</span><span class="tag">Guidelines</span><span class="tag">Naming</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3 class="service-title">Digital Experience</h3>
+      <p class="service-body">Websites, apps, and digital platforms designed with the precision of a craftsperson and the strategic mind of a consultant.</p>
+      <div class="service-tags">
+        <span class="tag">Web Design</span><span class="tag">UX/UI</span><span class="tag">Motion</span><span class="tag">Development</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3 class="service-title">Art Direction</h3>
+      <p class="service-body">We direct photography, film, and editorial work that elevates brands into cultural objects — images that linger in memory long after first encounter.</p>
+      <div class="service-tags">
+        <span class="tag">Photography</span><span class="tag">Film</span><span class="tag">Editorial</span><span class="tag">Campaign</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3 class="service-title">Spatial Design</h3>
+      <p class="service-body">Retail environments, exhibition spaces, and hospitality interiors that translate brand values into three-dimensional experiences.</p>
+      <div class="service-tags">
+        <span class="tag">Retail</span><span class="tag">Exhibitions</span><span class="tag">Hospitality</span><span class="tag">Wayfinding</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3 class="service-title">Brand Strategy</h3>
+      <p class="service-body">The thinking that underpins everything. We help brands find their true north — articulating purpose, positioning, and personality with clarity.</p>
+      <div class="service-tags">
+        <span class="tag">Positioning</span><span class="tag">Research</span><span class="tag">Tone of Voice</span><span class="tag">Workshops</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3 class="service-title">Print & Packaging</h3>
+      <p class="service-body">From luxury packaging to annual reports, we apply the same rigorous craft to every printed touchpoint — because physical materials still matter.</p>
+      <div class="service-tags">
+        <span class="tag">Packaging</span><span class="tag">Publications</span><span class="tag">Reports</span><span class="tag">Collateral</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Process -->
+  <div class="process-section">
+    <p class="section-eyebrow">How We Work</p>
+    <h2 class="section-title">A <em>refined</em> process for extraordinary results.</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <span class="step-num">01</span>
+        <div>
+          <h3 class="step-title">Discovery & Immersion</h3>
+          <p class="step-body">We begin every project by listening. Through workshops, interviews, and immersive research, we develop a deep understanding of your brand, audience, and ambitions.</p>
+        </div>
+        <span class="step-tag">Weeks 1–2</span>
+      </div>
+      <div class="process-step">
+        <span class="step-num">02</span>
+        <div>
+          <h3 class="step-title">Strategy & Direction</h3>
+          <p class="step-body">We synthesise research into a clear creative strategy — a brief that defines the direction, principles, and parameters for the creative work ahead.</p>
+        </div>
+        <span class="step-tag">Weeks 2–3</span>
+      </div>
+      <div class="process-step">
+        <span class="step-num">03</span>
+        <div>
+          <h3 class="step-title">Exploration & Craft</h3>
+          <p class="step-body">Our designers explore multiple creative directions before refining the most promising into highly resolved, presentation-ready concepts.</p>
+        </div>
+        <span class="step-tag">Weeks 3–6</span>
+      </div>
+      <div class="process-step">
+        <span class="step-num">04</span>
+        <div>
+          <h3 class="step-title">Refinement & Delivery</h3>
+          <p class="step-body">We refine the chosen direction with you, then prepare comprehensive deliverables — brand guidelines, digital assets, print files — ready for the world.</p>
+        </div>
+        <span class="step-tag">Weeks 6–8</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h2>Ready to explore <em>what's possible</em>?</h2>
+    <a href="#" class="btn" onclick="showSection('contact')">Start a Conversation</a>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div><div class="logo" style="font-size:28px;color:var(--cream)">HOW Studio</div><p class="footer-brand">Crafting beautiful brand experiences for discerning clients worldwide since 2015.</p></div>
+      <div class="footer-col"><h5>Studio</h5><a href="#" onclick="showSection('about')">About</a><a href="#" onclick="showSection('services')">Services</a><a href="#" onclick="showSection('portfolio')">Work</a></div>
+      <div class="footer-col"><h5>Services</h5><a href="#">Brand Identity</a><a href="#">Digital Design</a><a href="#">Spatial Design</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="#">hello@howstudio.com</a><a href="#">London, UK</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 HOW Studio. All rights reserved.</p><p>Privacy · Terms</p></div>
+  </footer>
+</section>
+
+<!-- ════════════════════════════════
+     PORTFOLIO PAGE
+════════════════════════════════ -->
+<section id="portfolio">
+  <div class="portfolio-header">
+    <div>
+      <p class="section-eyebrow">Selected Work</p>
+      <h1 class="section-title" style="font-size:clamp(36px,5vw,64px)">Projects we're <em>proud</em> of.</h1>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterWork(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterWork(this,'brand')">Brand</button>
+      <button class="filter-btn" onclick="filterWork(this,'digital')">Digital</button>
+      <button class="filter-btn" onclick="filterWork(this,'spatial')">Spatial</button>
+    </div>
+  </div>
+
+  <div class="portfolio-grid" id="workGrid">
+    <div class="work-card" data-cat="brand">
+      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80" alt="Maison Blanc">
+      <div class="work-info"><div class="work-title">Maison Blanc</div><div class="work-cat">Brand Identity · Luxury Hospitality</div></div>
+    </div>
+    <div class="work-card" data-cat="digital">
+      <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&q=80" alt="Velo Collective">
+      <div class="work-info"><div class="work-title">Velo Collective</div><div class="work-cat">Digital Experience · E-commerce</div></div>
+    </div>
+    <div class="work-card" data-cat="spatial">
+      <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&q=80" alt="Forma Gallery">
+      <div class="work-info"><div class="work-title">Forma Gallery</div><div class="work-cat">Spatial Design · Exhibition</div></div>
+    </div>
+    <div class="work-card" data-cat="brand">
+      <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=80" alt="Meridian Watches">
+      <div class="work-info"><div class="work-title">Meridian Watches</div><div class="work-cat">Brand Identity · Luxury Goods</div></div>
+    </div>
+    <div class="work-card" data-cat="digital">
+      <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=700&q=80" alt="Kindred App">
+      <div class="work-info"><div class="work-title">Kindred</div><div class="work-cat">Digital Experience · Mobile App</div></div>
+    </div>
+    <div class="work-card" data-cat="brand">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=80" alt="Terra Wines">
+      <div class="work-info"><div class="work-title">Terra Wines</div><div class="work-cat">Packaging · Art Direction</div></div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="testimonials">
+    <p class="section-eyebrow">Client Voices</p>
+    <h2 class="section-title">What our <em>clients</em> say.</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"HOW Studio brought a level of thinking and craft we hadn't encountered before. They fundamentally changed how we present ourselves to the world — and the results speak for themselves."</p>
+        <div class="testi-author">
+          <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sophie Laurent">
+          <div><div class="testi-name">Sophie Laurent</div><div class="testi-co">CEO, Maison Blanc</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"The team's ability to balance our commercial needs with genuine aesthetic ambition is remarkable. Our new brand has become one of our most valuable business assets."</p>
+        <div class="testi-author">
+          <img class="testi-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Thomas Berg">
+          <div><div class="testi-name">Thomas Berg</div><div class="testi-co">Founder, Meridian Watches</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"Working with HOW Studio felt less like a client-agency relationship and more like a true creative partnership. They challenged our thinking in the best possible way."</p>
+        <div class="testi-author">
+          <img class="testi-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Amara Osei">
+          <div><div class="testi-name">Amara Osei</div><div class="testi-co">Director, Forma Gallery</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h2>Your project could be our <em>next great</em> work.</h2>
+    <a href="#" class="btn" onclick="showSection('contact')">Let's Collaborate</a>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div><div class="logo" style="font-size:28px;color:var(--cream)">HOW Studio</div><p class="footer-brand">Crafting beautiful brand experiences for discerning clients worldwide since 2015.</p></div>
+      <div class="footer-col"><h5>Studio</h5><a href="#" onclick="showSection('about')">About</a><a href="#" onclick="showSection('services')">Services</a><a href="#" onclick="showSection('portfolio')">Work</a></div>
+      <div class="footer-col"><h5>Services</h5><a href="#">Brand Identity</a><a href="#">Digital Design</a><a href="#">Spatial Design</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="#">hello@howstudio.com</a><a href="#">London, UK</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 HOW Studio. All rights reserved.</p><p>Privacy · Terms</p></div>
+  </footer>
+</section>
+
+<!-- ════════════════════════════════
+     BLOG / JOURNAL PAGE
+════════════════════════════════ -->
+<section id="blog">
+  <div style="padding:160px 5% 80px;background:var(--ivory);">
+    <p class="section-eyebrow">The Journal</p>
+    <h1 class="section-title" style="max-width:600px;font-size:clamp(40px,6vw,80px)">Thoughts on <em>design</em>, culture & craft.</h1>
+  </div>
+
+  <div class="blog-section" style="padding-top:60px">
+    <!-- Featured post -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-bottom:80px;align-items:center;" class="blog-featured">
+      <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="Featured post" style="width:100%;aspect-ratio:4/3;object-fit:cover;">
+      <div>
+        <div class="blog-meta"><span class="blog-cat">Design Thinking</span><span class="blog-date">November 2025</span></div>
+        <h2 style="font-family:var(--font-serif);font-size:36px;font-weight:400;line-height:1.25;margin-bottom:16px;">Why the best brands never try to please everyone.</h2>
+        <p class="blog-excerpt" style="font-size:15px">In an age of algorithmic optimisation and relentless growth metrics, the most enduring luxury brands share a counterintuitive quality: they know exactly who they're not for — and they're unapologetic about it...</p>
+        <a href="#" class="blog-read" style="margin-top:24px">Read Essay</a>
+      </div>
+    </div>
+
+    <p class="section-eyebrow">Recent Articles</p>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <img class="blog-img" src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&q=80" alt="Typography article">
+        <div class="blog-meta"><span class="blog-cat">Typography</span><span class="blog-date">Oct 2025</span></div>
+        <h3 class="blog-title">The quiet power of restraint in type design.</h3>
+        <p class="blog-excerpt">Less is not less — it's everything. Why our typographic choices in 2025 should start with subtraction, not addition.</p>
+        <a href="#" class="blog-read">Read More</a>
+      </div>
+      <div class="blog-card">
+        <img class="blog-img" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80" alt="Brand strategy article">
+        <div class="blog-meta"><span class="blog-cat">Strategy</span><span class="blog-date">Sep 2025</span></div>
+        <h3 class="blog-title">Six questions every brand must answer before designing anything.</h3>
+        <p class="blog-excerpt">Great design is downstream of great strategy. Before a single pixel is placed, there are six questions every brand needs answered honestly.</p>
+        <a href="#" class="blog-read">Read More</a>
+      </div>
+      <div class="blog-card">
+        <img class="blog-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Spatial design article">
+        <div class="blog-meta"><span class="blog-cat">Spatial</span><span class="blog-date">Aug 2025</span></div>
+        <h3 class="blog-title">How physical space became the last luxury brand differentiator.</h3>
+        <p class="blog-excerpt">As digital touchpoints converge, the brands investing in extraordinary physical environments are seeing disproportionate returns on emotion and loyalty.</p>
+        <a href="#" class="blog-read">Read More</a>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div style="margin-top:100px;background:var(--charcoal);padding:80px 5%;text-align:center;">
+      <p class="section-eyebrow" style="color:var(--gold)">Stay Inspired</p>
+      <h2 style="font-family:var(--font-serif);font-size:clamp(28px,4vw,48px);font-weight:300;color:var(--cream);margin-bottom:16px;">The HOW <em style="color:var(--gold-lt)">Journal</em>, monthly.</h2>
+      <p style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:36px;max-width:400px;margin-left:auto;margin-right:auto;">Thoughtful essays on design, culture, and craft. No spam, no trends. Just ideas worth sitting with.</p>
+      <div style="display:flex;gap:0;max-width:480px;margin:0 auto;">
+        <input type="email" placeholder="your@email.com" style="flex:1;border-right:none;background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);color:var(--cream)">
+        <button class="btn" style="white-space:nowrap">Subscribe</button>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top:0">
+    <div class="footer-grid">
+      <div><div class="logo" style="font-size:28px;color:var(--cream)">HOW Studio</div><p class="footer-brand">Crafting beautiful brand experiences for discerning clients worldwide since 2015.</p></div>
+      <div class="footer-col"><h5>Studio</h5><a href="#" onclick="showSection('about')">About</a><a href="#" onclick="showSection('services')">Services</a><a href="#" onclick="showSection('portfolio')">Work</a></div>
+      <div class="footer-col"><h5>Services</h5><a href="#">Brand Identity</a><a href="#">Digital Design</a><a href="#">Spatial Design</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="#">hello@howstudio.com</a><a href="#">London, UK</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 HOW Studio. All rights reserved.</p><p>Privacy · Terms</p></div>
+  </footer>
+</section>
+
+<!-- ════════════════════════════════
+     CONTACT PAGE
+════════════════════════════════ -->
+<section id="contact">
+  <div style="padding:160px 5% 40px;background:var(--ivory);">
+    <p class="section-eyebrow">Get in Touch</p>
+    <h1 class="section-title" style="max-width:600px;font-size:clamp(40px,6vw,80px)">Let's make something <em>wonderful</em>.</h1>
+    <p style="font-size:15px;color:var(--warm-gray);max-width:480px;margin-top:16px;">Tell us about your project. We read every message and respond within two business days.</p>
+  </div>
+
+  <div class="contact-section" style="padding-top:60px;">
+    <div class="contact-form">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Maya"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Chen"></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="hello@yourbrand.com"></div>
+      <div class="form-group"><label>Company / Brand</label><input type="text" placeholder="Your company name"></div>
+      <div class="form-group">
+        <label>Type of Project</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Brand Identity</option>
+          <option>Digital Experience</option>
+          <option>Art Direction</option>
+          <option>Spatial Design</option>
+          <option>Brand Strategy</option>
+          <option>Print & Packaging</option>
+          <option>Multiple Services</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Budget Range</label>
+        <select>
+          <option>£25,000 – £50,000</option>
+          <option>£50,000 – £100,000</option>
+          <option>£100,000 – £250,000</option>
+          <option>£250,000+</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Tell Us About Your Project</label><textarea placeholder="What are you hoping to achieve? What makes your brand unique? Is there a timeline we should know about?"></textarea></div>
+      <button class="btn" style="align-self:flex-start;border:none">Send Enquiry →</button>
+    </div>
+
+    <div class="contact-info">
+      <div class="contact-detail">
+        <h4>Studio Address</h4>
+        <p>12 Redchurch Street<br>Shoreditch, London<br>E2 7DD, United Kingdom</p>
+      </div>
+      <div class="contact-detail">
+        <h4>New Business</h4>
+        <p><a href="mailto:hello@howstudio.com">hello@howstudio.com</a></p>
+        <p><a href="tel:+442079460988">+44 20 7946 0988</a></p>
+      </div>
+      <div class="contact-detail">
+        <h4>Studio Hours</h4>
+        <p>Monday – Friday<br>9:00am – 6:00pm GMT</p>
+      </div>
+      <div style="border-top:1px solid var(--sand);padding-top:32px;margin-top:16px;">
+        <p style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Follow Our Work</p>
+        <div class="social-links">
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Behance</a>
+          <a href="#">Dribbble</a>
+        </div>
+      </div>
+
+      <!-- Map placeholder -->
+      <div style="margin-top:40px;background:var(--sand);height:200px;display:flex;align-items:center;justify-content:center;">
+        <p style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm-gray)">Shoreditch, London E2</p>
+      </div>
+    </div>
+  </div>
+
+  <footer style="margin-top:80px">
+    <div class="footer-grid">
+      <div><div class="logo" style="font-size:28px;color:var(--cream)">HOW Studio</div><p class="footer-brand">Crafting beautiful brand experiences for discerning clients worldwide since 2015.</p></div>
+      <div class="footer-col"><h5>Studio</h5><a href="#" onclick="showSection('about')">About</a><a href="#" onclick="showSection('services')">Services</a><a href="#" onclick="showSection('portfolio')">Work</a></div>
+      <div class="footer-col"><h5>Services</h5><a href="#">Brand Identity</a><a href="#">Digital Design</a><a href="#">Spatial Design</a></div>
+      <div class="footer-col"><h5>Contact</h5><a href="#">hello@howstudio.com</a><a href="#">London, UK</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 HOW Studio. All rights reserved.</p><p>Privacy · Terms</p></div>
+  </footer>
+</section>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return false;
+  }
+
+  document.querySelectorAll('a[onclick]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  function filterWork(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.work-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
+  // Blog featured responsive
+  const featuredBlog = document.querySelector('.blog-featured');
+  function fixBlogFeatured() {
+    if (featuredBlog) {
+      featuredBlog.style.gridTemplateColumns = window.innerWidth < 700 ? '1fr' : '1fr 1fr';
+    }
+  }
+  fixBlogFeatured();
+  window.addEventListener('resize', fixBlogFeatured);
+</script>
+</body>
+</html>
